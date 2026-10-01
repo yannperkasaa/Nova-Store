@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nova Store</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo" onclick="goHome()">
+        NOVA<span>STORE</span>
+    </div>
+
+    <nav>
+        <button onclick="goHome()">Home</button>
+        <button onclick="scrollProducts()">Produk</button>
+        <button onclick="showOrders()">Pesanan</button>
+    </nav>
+
+    <div class="nav-buttons">
+
+        <button onclick="toggleDarkMode()" title="Dark Mode">
+            🌙
+        </button>
+
+        <button onclick="openWishlist()">
+            ♡ <span id="wishlistCount">0</span>
+        </button>
+
+        <button onclick="openCart()">
+            🛒 <span id="cartCount">0</span>
+        </button>
+
+        <button onclick="openAccount()">
+            👤
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            ✨ NOVA STORE
+        </div>
+
+        <h1>
+            Belanja Modern,
+            <br>
+            <span>Lebih Mudah.</span>
+        </h1>
+
+        <p>
+            Temukan berbagai produk pilihan
+            dengan harga menarik dan pengalaman
+            belanja yang simpel.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                class="btn-primary"
+                onclick="scrollProducts()"
+            >
+                Belanja Sekarang
+            </button>
+
+            <button
+                class="btn-secondary"
+                onclick="openCS()"
+            >
+                💬 Customer Service
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FLASH SALE ================= -->
+
+<section class="flash">
+
+    <div>
+        <small>🔥 PROMO TERBATAS</small>
+
+        <h2>
+            Flash Sale
+        </h2>
+    </div>
+
+    <div class="timer">
+
+        <div>
+            <b id="hours">00</b>
+            <small>Jam</small>
+        </div>
+
+        <div>
+            <b id="minutes">00</b>
+            <small>Menit</small>
+        </div>
+
+        <div>
+            <b id="seconds">00</b>
+            <small>Detik</small>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features">
+
+    <div class="feature">
+        <div>🚚</div>
+        <h3>Pengiriman</h3>
+        <p>Cepat dan aman</p>
+    </div>
+
+    <div class="feature">
+        <div>💳</div>
+        <h3>Pembayaran</h3>
+        <p>Banyak pilihan</p>
+    </div>
+
+    <div class="feature">
+        <div>🔒</div>
+        <h3>Aman</h3>
+        <p>Sistem sederhana</p>
+    </div>
+
+    <div class="feature">
+        <div>💬</div>
+        <h3>Customer Service</h3>
+        <p>Siap membantu</p>
+    </div>
+
+</section>
+
+
+<!-- ================= PRODUCTS ================= -->
+
+<section
+    class="products-section"
+    id="productsSection"
+>
+
+    <div class="section-heading">
+
+        <small>KOLEKSI NOVA</small>
+
+        <h2>
+            Produk Pilihan
+        </h2>
+
+    </div>
+
+
+    <div class="product-tools">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Cari produk..."
+        >
+
+        <select id="categoryFilter">
+
+            <option value="all">
+                Semua Kategori
+            </option>
+
+            <option value="Fashion">
+                Fashion
+            </option>
+
+            <option value="Elektronik">
+                Elektronik
+            </option>
+
+            <option value="Aksesoris">
+                Aksesoris
+            </option>
+
+            <option value="Lifestyle">
+                Lifestyle
+            </option>
+
+        </select>
+
+
+        <select id="sortFilter">
+
+            <option value="default">
+                Urutan Default
+            </option>
+
+            <option value="cheap">
+                Harga Terendah
+            </option>
+
+            <option value="expensive">
+                Harga Tertinggi
+            </option>
+
+            <option value="rating">
+                Rating Tertinggi
+            </option>
+
+            <option value="sold">
+                Produk Terlaris
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div
+        id="productGrid"
+        class="product-grid"
+    ></div>
+
+</section>
+
+
+<!-- ================= ORDERS ================= -->
+
+<section
+    class="orders-section"
+    id="ordersSection"
+>
+
+    <div class="section-heading">
+
+        <small>AKUN SAYA</small>
+
+        <h2>
+            Pesanan Saya
+        </h2>
+
+    </div>
+
+    <div id="ordersList"></div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div>
+
+        <h2>
+            NOVA<span>STORE</span>
+        </h2>
+
+        <p>
+            Simple shopping.
+            Better experience.
+        </p>
+
+    </div>
+
+    <p>
+        © 2026 Nova Store
+    </p>
+
+</footer>
+
+
+<!-- ================= FLOATING CS ================= -->
+
+<button
+    class="floating-cs"
+    onclick="openCS()"
+>
+    💬
+</button>
+
+
+<!-- =====================================================
+     LOGIN / REGISTER
+===================================================== -->
+
+<div
+    class="modal"
+    id="authModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('authModal')"
+        >
+            ×
+        </button>
+
+        <h2 id="authTitle">
+            Login
+        </h2>
+
+        <input
+            type="text"
+            id="authName"
+            placeholder="Nama lengkap"
+        >
+
+        <input
+            type="email"
+            id="authEmail"
+            placeholder="Email"
+        >
+
+        <input
+            type="password"
+            id="authPassword"
+            placeholder="Password"
+        >
+
+        <button
+            class="btn-primary full"
+            onclick="submitAuth()"
+        >
+            <span id="authButton">
+                Login
+            </span>
+        </button>
+
+        <p
+            class="auth-switch"
+            onclick="toggleAuth()"
+            id="authSwitch"
+        >
+            Belum punya akun?
+            <b>Daftar</b>
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ACCOUNT
+===================================================== -->
+
+<div
+    class="modal"
+    id="accountModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('accountModal')"
+        >
+            ×
+        </button>
+
+        <div class="avatar">
+            👤
+        </div>
+
+        <h2
+            id="accountName"
+            class="center"
+        >
+            Akun
+        </h2>
+
+        <p
+            id="accountEmail"
+            class="center muted"
+        ></p>
+
+        <button
+            class="btn-primary full"
+            onclick="showOrders()"
+        >
+            📦 Pesanan Saya
+        </button>
+
+        <button
+            class="btn-secondary full"
+            onclick="logout()"
+        >
+            Keluar
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CART
+===================================================== -->
+
+<div
+    class="drawer"
+    id="cartDrawer"
+>
+
+    <div class="drawer-header">
+
+        <h2>
+            🛒 Keranjang
+        </h2>
+
+        <button
+            onclick="closeModal('cartDrawer')"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div id="cartList"></div>
+
+
+    <div class="cart-bottom">
+
+        <input
+            id="voucherInput"
+            placeholder="Kode voucher"
+        >
+
+        <button
+            class="btn-secondary full"
+            onclick="applyVoucher()"
+        >
+            Gunakan Voucher
+        </button>
+
+
+        <div class="cart-summary">
+
+            <span>
+                Subtotal
+            </span>
+
+            <b id="cartSubtotal">
+                Rp0
+            </b>
+
+        </div>
+
+
+        <button
+            class="btn-primary full"
+            onclick="openCheckout()"
+        >
+            🛍️ Buat Pesanan
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PRODUCT DETAIL
+===================================================== -->
+
+<div
+    class="modal"
+    id="productModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('productModal')"
+        >
+            ×
+        </button>
+
+        <div id="productDetail"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     WISHLIST
+===================================================== -->
+
+<div
+    class="modal"
+    id="wishlistModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('wishlistModal')"
+        >
+            ×
+        </button>
+
+        <h2>
+            ❤️ Wishlist
+        </h2>
+
+        <div id="wishlistList"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CHECKOUT
+===================================================== -->
+
+<div
+    class="modal"
+    id="checkoutModal"
+>
+
+    <div class="modal-box checkout-box">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('checkoutModal')"
+        >
+            ×
+        </button>
+
+        <h2>
+            Checkout
+        </h2>
+
+
+        <label>
+            Nama Penerima
+        </label>
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Nama penerima"
+        >
+
+
+        <label>
+            Alamat Lengkap
+        </label>
+
+        <textarea
+            id="customerAddress"
+            placeholder="Masukkan alamat lengkap..."
+        ></textarea>
+
+
+        <label>
+            Pengiriman
+        </label>
+
+        <select id="shipping">
+
+            <option value="10000">
+                Reguler - Rp10.000
+            </option>
+
+            <option value="20000">
+                Express - Rp20.000
+            </option>
+
+            <option value="30000">
+                Same Day - Rp30.000
+            </option>
+
+        </select>
+
+
+        <label>
+            Pembayaran
+        </label>
+
+        <select id="paymentMethod">
+
+            <option value="QRIS">
+                QRIS
+            </option>
+
+            <option value="BANK">
+                Transfer Bank
+            </option>
+
+            <option value="EWALLET">
+                E-Wallet
+            </option>
+
+            <option value="COD">
+                COD
+            </option>
+
+        </select>
+
+
+        <div class="checkout-summary">
+
+            <div>
+                <span>
+                    Subtotal
+                </span>
+
+                <b id="checkoutSubtotal">
+                    Rp0
+                </b>
+            </div>
+
+
+            <div>
+                <span>
+                    Pengiriman
+                </span>
+
+                <b id="checkoutShipping">
+                    Rp0
+                </b>
+            </div>
+
+
+            <div>
+                <span>
+                    Diskon
+                </span>
+
+                <b id="checkoutDiscount">
+                    Rp0
+                </b>
+            </div>
+
+
+            <div class="checkout-total">
+
+                <span>
+                    Total
+                </span>
+
+                <b id="checkoutTotal">
+                    Rp0
+                </b>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="btn-primary full"
+            onclick="createOrder()"
+        >
+            🛍️ Buat Pesanan
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     PAYMENT
+===================================================== -->
+
+<div
+    class="modal"
+    id="paymentModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('paymentModal')"
+        >
+            ×
+        </button>
+
+        <h2>
+            💳 Pembayaran
+        </h2>
+
+        <div id="paymentContent"></div>
+
+        <button
+            class="btn-primary full"
+            onclick="finishPayment()"
+        >
+            ✓ Saya Sudah Bayar
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CUSTOMER SERVICE
+===================================================== -->
+
+<div
+    class="modal"
+    id="csModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            onclick="closeModal('csModal')"
+        >
+            ×
+        </button>
+
+        <h2>
+            💬 Customer Service
+        </h2>
+
+        <p class="online">
+            ● Online
+        </p>
+
+
+        <div class="quick-buttons">
+
+            <button onclick="quickCS('cara')">
+                Cara Belanja
+            </button>
+
+            <button onclick="quickCS('pesanan')">
+                Pesanan
+            </button>
+
+            <button onclick="quickCS('bayar')">
+                Pembayaran
+            </button>
+
+            <button onclick="quickCS('kirim')">
+                Pengiriman
+            </button>
+
+        </div>
+
+
+        <div
+            class="chat-box"
+            id="chatBox"
+        >
+
+            <div class="chat bot">
+                Halo 👋 Selamat datang di Nova Store.
+                Ada yang bisa kami bantu?
+            </div>
+
+        </div>
+
+
+        <div class="chat-input">
+
+            <input
+                id="chatInput"
+                placeholder="Tulis pesan..."
+            >
+
+            <button onclick="sendChat()">
+                ➤
+            </button>
+
+        </div>
+
+
+        <button
+            class="btn-secondary full"
+            onclick="openWhatsApp()"
+        >
+            WhatsApp CS
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div id="toast"></div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>   
